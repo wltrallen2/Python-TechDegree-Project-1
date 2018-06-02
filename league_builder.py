@@ -2,7 +2,7 @@ import csv
 
 ################# CONSTANTS #################
 
-#Constant that supplies the names of the teams and file names
+#Constants that supplies the names of the teams and file names
 TEAMS = ['Sharks', 'Dragons', 'Raptors']
 FILENAME = 'teams.txt'
 WELCOME_LTR_MASTER = 'welcome_letter_master.txt'
@@ -20,7 +20,7 @@ TEAM_NAME = 'TEAM_NAME'
 
 ################# FUNCTIONS #################
 
-#Determines if a player has soccer experienced_players
+#Determines if a player has soccer experience
 #RETURNS bool (True if experienced, False if not)
 def has_experience(player):
     if player[EXPERIENCE] == 'YES': return True
@@ -63,7 +63,7 @@ def create_welcome_letter_for(player, team, letter_text):
         file.write(letter_text)
 
 
-#Imports the text from welcome_letter_master into a variable
+#Imports and returns the text from welcome_letter_master
 #to be used to create welcome letters for each student
 def import_welcome_letter_text():
     letter_text = ''
