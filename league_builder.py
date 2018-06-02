@@ -3,6 +3,7 @@ import csv
 #Constant that supplies the names of the teams
 TEAMS = ['Sharks', 'Dragons', 'Raptors']
 FILENAME = 'teams.txt'
+WELCOME_LTR_MASTER = 'welcome_letter_master.txt'
 
 
 #Constants for CSV File Headings
@@ -39,10 +40,20 @@ def output_team_lists(team_lists):
             file.write("\n")
 
 
-def create_welcome_letter_for(player, team):
+def create_welcome_letter_for(player, team, letter_text):
     name = player[NAME]
     guardians = player[GUARDIANS]
     letter_filename = name.lower().replace(' ', '_') + '.txt'
+
+
+#Imports the text from welcome_letter_master into a variable
+#to be used to create welcome letters for each student
+def import_welcome_letter_text():
+    letter_text = ''
+    with open(WELCOME_LTR_MASTER) as file:
+        for line in file:
+            letter_text += line
+    return(letter_text)
 
 
 #Main Function
@@ -58,6 +69,9 @@ if __name__ == "__main__":
     #experienced teams WHILE importing the data from the csv file.
     exp_index = 0
     inexp_index = len(team_lists) - 1
+
+    #Import template for welcome letter
+    letter_text = import_welcome_letter_text()
 
     #Reads in the CSV file and divvies players into teams.
     #Players with experienced are placed on teams in a 'positive'
@@ -78,7 +92,7 @@ if __name__ == "__main__":
                 team_lists[team_name].append(player)
                 if inexp_index == 0 : inexp_index = max_team_index
                 else: inexp_index -= 1
-            create_welcome_letter_for(player, team_name)
+            create_welcome_letter_for(player, team_name, letter_text)
 
     #Prints the team_lists to the console in a readable manner
     output_team_lists(team_lists)
