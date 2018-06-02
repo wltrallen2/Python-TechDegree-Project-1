@@ -37,6 +37,7 @@ def player_description(player):
 
 # output_team_lists creates the output file (truncating
 # any previous versions) and outputs each team's data to file.
+def output_team_lists(team_lists):
     with open(FILENAME, 'w') as file:
         for team, team_list in team_lists.items():
             file.write(team + ":\n")
