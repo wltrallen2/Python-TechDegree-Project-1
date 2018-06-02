@@ -2,6 +2,7 @@ import csv
 
 #Constant that supplies the names of the teams
 TEAMS = ['Sharks', 'Dragons', 'Raptors']
+FILENAME = 'teams.txt'
 
 
 #Constants for CSV File Headings
@@ -25,6 +26,15 @@ def player_description(player):
     experience = player[EXPERIENCE]
     guardians = player[GUARDIANS]
     return "{}, {}, {}".format(name, experience, guardians)
+
+
+def output_team_lists(team_lists):
+    with open(FILENAME, 'w') as file:
+        for team, team_list in team_lists.items():
+            file.write(team + ":\n")
+            for player in team_list:
+                file.write(player_description(player) + "\n")
+            file.write("\n")
 
 
 #Main Function
@@ -62,8 +72,4 @@ if __name__ == "__main__":
                 else: inexp_index -= 1
 
     #Prints the team_lists to the console in a readable manner
-    for team, team_list in team_lists.items():
-        print("\n\n\n")
-        print(team)
-        for player in team_list:
-            print(player_description(player))
+    output_team_lists(team_lists)
