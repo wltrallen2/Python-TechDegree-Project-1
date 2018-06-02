@@ -1,10 +1,11 @@
 import csv
 
+################# CONSTANTS #################
+
 #Constant that supplies the names of the teams
 TEAMS = ['Sharks', 'Dragons', 'Raptors']
 FILENAME = 'teams.txt'
 WELCOME_LTR_MASTER = 'welcome_letter_master.txt'
-
 
 #Constants for CSV File Headings
 NAME = 'Name'
@@ -12,6 +13,12 @@ EXPERIENCE = 'Soccer Experience'
 GUARDIANS = 'Guardian Name(s)'
 HEIGHT = 'Height (inches)'
 
+#Constants for welcome_letter_master
+STUDENT_NAME = 'STUDENT_NAME'
+GUARDIAN_NAMES = 'GUARDIAN_NAMES'
+TEAM_NAME = 'TEAM_NAME'
+
+################# FUNCTIONS #################
 
 #Determines if a player has soccer experienced_players
 #RETURNS bool (True if experienced, False if not)
@@ -40,10 +47,20 @@ def output_team_lists(team_lists):
             file.write("\n")
 
 
+#Creates and outputs personalized welcome letter for player
+#when given the team and the letter_text using the constants:
+#STUDENT_NAME, GUARDIAN_NAMES, TEAM_NAME
 def create_welcome_letter_for(player, team, letter_text):
     name = player[NAME]
     guardians = player[GUARDIANS]
     letter_filename = name.lower().replace(' ', '_') + '.txt'
+
+    letter_text = letter_text.replace(STUDENT_NAME, name)
+    letter_text = letter_text.replace(GUARDIAN_NAMES, guardians)
+    letter_text = letter_text.replace(TEAM_NAME, team)
+
+    with open(letter_filename, 'w') as file:
+        file.write(letter_text)
 
 
 #Imports the text from welcome_letter_master into a variable
@@ -56,7 +73,7 @@ def import_welcome_letter_text():
     return(letter_text)
 
 
-#Main Function
+################# __MAIN__ #################
 if __name__ == "__main__":
     #Creates a dictionary<string: team name, list: player_dictionaries>
     #for each of the teams.
@@ -78,6 +95,8 @@ if __name__ == "__main__":
     #direction (from Team 0 to Team x, where x is the number of teams - 1),
     #and inexperienced players are placed on teams in a 'negative'
     #direction (from Team x, where x is the number of teams - 1, to Team 0.)
+    #
+    #Also calls function to create customized welcome letter for each student.
     max_team_index = len(team_lists) - 1
     with open('soccer_players.csv') as csvfile:
         players_reader = csv.DictReader(csvfile)
@@ -94,5 +113,5 @@ if __name__ == "__main__":
                 else: inexp_index -= 1
             create_welcome_letter_for(player, team_name, letter_text)
 
-    #Prints the team_lists to the console in a readable manner
+    #Outputs team list to file (FILENAME from constants)
     output_team_lists(team_lists)
