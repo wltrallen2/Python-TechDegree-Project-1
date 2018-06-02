@@ -1,8 +1,10 @@
 import csv
 
+#Constant that supplies the names of the teams
 TEAMS = ['Sharks', 'Dragons', 'Raptors']
 
-# Constants for CSV File Headings
+
+#Constants for CSV File Headings
 NAME = 'Name'
 EXPERIENCE = 'Soccer Experience'
 GUARDIANS = 'Guardian Name(s)'
@@ -27,7 +29,8 @@ def player_description(player):
 
 #Main Function
 if __name__ == "__main__":
-    #Creates a dictionary for each of the three teams
+    #Creates a dictionary<string: team name, list: player_dictionaries>
+    #for each of the teams.
     team_lists = dict()
     for team in TEAMS:
         team_lists[team] = list()
@@ -38,7 +41,7 @@ if __name__ == "__main__":
     exp_index = 0
     inexp_index = len(team_lists) - 1
 
-    #Reads in the CSV file and divvies players onto two teamsself.
+    #Reads in the CSV file and divvies players into teams.
     #Players with experienced are placed on teams in a 'positive'
     #direction (from Team 0 to Team x, where x is the number of teams - 1),
     #and inexperienced players are placed on teams in a 'negative'
