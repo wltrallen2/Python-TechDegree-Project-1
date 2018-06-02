@@ -2,33 +2,32 @@ import csv
 
 ################# CONSTANTS #################
 
-#Constants that supplies the names of the teams and file names
+# Create constant that supply the names of the teams and files.
 TEAMS = ['Sharks', 'Dragons', 'Raptors']
 FILENAME = 'teams.txt'
 WELCOME_LTR_MASTER = 'welcome_letter_master.txt'
 
-#Constants for CSV File Headings
+# Create constants to represent CSV File Headings.
 NAME = 'Name'
 EXPERIENCE = 'Soccer Experience'
 GUARDIANS = 'Guardian Name(s)'
 HEIGHT = 'Height (inches)'
 
-#Constants from welcome_letter_master
+# Create constants to represent placeholders in the welcome_letter_master.
 STUDENT_NAME = 'STUDENT_NAME'
 GUARDIAN_NAMES = 'GUARDIAN_NAMES'
 TEAM_NAME = 'TEAM_NAME'
 
 ################# FUNCTIONS #################
 
-#Determines if a player has soccer experience
-#RETURNS bool (True if experienced, False if not)
+# has_experience determines if a player has soccer experience
+# and returns True if he is experienced and False if not.
 def has_experience(player):
-    if player[EXPERIENCE] == 'YES': return True
-    else: return False
+    return player[EXPERIENCE] == 'YES'
 
 
-#Returns a description of the player formatted as:
-#Player name, experience level, and guardian names
+# player_description returns a description of the player formatted as
+# "Player_Name, Experience_Level, and Guardian_Names."
 def player_description(player):
     name = player[NAME]
     experience = player[EXPERIENCE]
@@ -36,9 +35,8 @@ def player_description(player):
     return "{}, {}, {}".format(name, experience, guardians)
 
 
-#Create output file (truncating any previous versions)
-#and output each team's data to file
-def output_team_lists(team_lists):
+# output_team_lists creates the output file (truncating
+# any previous versions) and outputs each team's data to file.
     with open(FILENAME, 'w') as file:
         for team, team_list in team_lists.items():
             file.write(team + ":\n")
@@ -47,9 +45,10 @@ def output_team_lists(team_lists):
             file.write("\n")
 
 
-#Creates and outputs personalized welcome letter for player
-#when given the team and the letter_text using the constants:
-#STUDENT_NAME, GUARDIAN_NAMES, TEAM_NAME
+# create_welcome_letter_for creates and outputs personalized
+# welcome letter for player when given the team and the
+# letter_text.  The letter_text must use the correct placeholders:
+# STUDENT_NAME, GUARDIAN_NAMES, TEAM_NAME.
 def create_welcome_letter_for(player, team, letter_text):
     name = player[NAME]
     guardians = player[GUARDIANS]
@@ -63,8 +62,9 @@ def create_welcome_letter_for(player, team, letter_text):
         file.write(letter_text)
 
 
-#Imports and returns the text from welcome_letter_master
-#to be used to create welcome letters for each student
+# import_welcome_letter_text imports and returns the text
+# from welcome_letter_master to be used to create welcome
+# letters for each student.
 def import_welcome_letter_text():
     letter_text = ''
     with open(WELCOME_LTR_MASTER) as file:
@@ -75,28 +75,28 @@ def import_welcome_letter_text():
 
 ################# __MAIN__ #################
 if __name__ == "__main__":
-    #Creates a dictionary<string: team name, list: player_dictionaries>
-    #for each of the teams.
+    # Create a dictionary with string keys (the team name) and
+    # dictionary values (player data) for each of the teams.
     team_lists = dict()
     for team in TEAMS:
         team_lists[team] = list()
 
-    #Create two opposing indexes (exp and inexp) to assist
-    #the following csv reader code to divvy the players into equally
-    #experienced teams WHILE importing the data from the csv file.
+    # Create two opposing indices (exp and inexp) to assist
+    # in divvying the players into equally experienced teams
+    # WHILE importing the data from the csv file.
     exp_index = 0
     inexp_index = len(team_lists) - 1
 
-    #Import template for welcome letter
+    # Import template for welcome letter.
     letter_text = import_welcome_letter_text()
 
-    #Reads in the CSV file and divvies players into teams.
-    #Players with experience are placed on teams in a 'positive'
-    #direction (from Team 0 to Team x, where x is the number of teams - 1),
-    #and inexperienced players are placed on teams in a 'negative'
-    #direction (from Team x, where x is the number of teams - 1, to Team 0.)
+    # Read in the CSV file and divvy players into teams.
+    # Players with experience are placed on teams in a 'positive'
+    # direction (from Team 0 to Team x, where x is the number of teams - 1),
+    # and inexperienced players are placed on teams in a 'negative'
+    # direction (from Team x, where x is the number of teams - 1, to Team 0.)
     #
-    #Also calls function to create customized welcome letter for each student.
+    # Also, call function to create customized welcome letter for each student.
     max_team_index = len(team_lists) - 1
     with open('soccer_players.csv') as csvfile:
         players_reader = csv.DictReader(csvfile)
@@ -113,5 +113,5 @@ if __name__ == "__main__":
                 else: inexp_index -= 1
             create_welcome_letter_for(player, team_name, letter_text)
 
-    #Outputs team list to file (FILENAME from constants)
+    # Output list of teams and players to file.
     output_team_lists(team_lists)
