@@ -104,13 +104,17 @@ if __name__ == "__main__":
             if has_experience(player):
                 team_name = TEAMS[exp_index]
                 team_lists[team_name].append(player)
-                if exp_index == max_team_index : exp_index = 0
-                else: exp_index += 1
+                if exp_index == max_team_index:
+                    exp_index = 0
+                else:
+                    exp_index += 1
             else:
                 team_name = TEAMS[inexp_index]
                 team_lists[team_name].append(player)
-                if inexp_index == 0 : inexp_index = max_team_index
-                else: inexp_index -= 1
+                if inexp_index == 0:
+                    inexp_index = max_team_index
+                else:
+                    inexp_index -= 1
             create_welcome_letter_for(player, team_name, letter_text)
 
     # Output list of teams and players to file.
