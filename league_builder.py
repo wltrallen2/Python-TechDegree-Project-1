@@ -16,7 +16,7 @@ def has_experience(player):
     else: return False
 
 
-#Prints a description of the player to console:
+#Returns a description of the player formatted as:
 #Player name, experience level, and guardian names
 def player_description(player):
     name = player[NAME]
@@ -32,11 +32,17 @@ if __name__ == "__main__":
     for team in TEAMS:
         team_lists[team] = list()
 
+    #Create two opposing indexes (exp and inexp) to assist
+    #the following csv reader code to divvy the players into equally
+    #experienced teams WHILE importing the data from the csv file.
     exp_index = 0
     inexp_index = len(team_lists) - 1
 
-    #Reads in the CSV file and divvies players into two groups:
-    #experienced_players and inexperienced_players
+    #Reads in the CSV file and divvies players onto two teamsself.
+    #Players with experienced are placed on teams in a 'positive'
+    #direction (from Team 0 to Team x, where x is the number of teams - 1),
+    #and inexperienced players are placed on teams in a 'negative'
+    #direction (from Team x, where x is the number of teams - 1, to Team 0.)
     with open('soccer_players.csv') as csvfile:
         players_reader = csv.DictReader(csvfile)
         for player in players_reader:
@@ -49,8 +55,9 @@ if __name__ == "__main__":
                 if inexp_index == 0 : inexp_index = len(team_lists) - 1
                 else: inexp_index -= 1
 
+    #Prints the team_lists to the console in a readable manner
     for team, team_list in team_lists.items():
+        print("\n\n\n")
         print(team)
         for player in team_list:
             print(player_description(player))
-        print("\n\n\n")
