@@ -46,16 +46,19 @@ if __name__ == "__main__":
     #direction (from Team 0 to Team x, where x is the number of teams - 1),
     #and inexperienced players are placed on teams in a 'negative'
     #direction (from Team x, where x is the number of teams - 1, to Team 0.)
+    max_team_index = len(team_lists) - 1
     with open('soccer_players.csv') as csvfile:
         players_reader = csv.DictReader(csvfile)
         for player in players_reader:
             if has_experience(player):
-                team_lists[TEAMS[exp_index]].append(player)
-                if exp_index == len(team_lists) - 1 : exp_index = 0
+                team_name = TEAMS[exp_index]
+                team_lists[team_name].append(player)
+                if exp_index == max_team_index : exp_index = 0
                 else: exp_index += 1
             else:
-                team_lists[TEAMS[inexp_index]].append(player)
-                if inexp_index == 0 : inexp_index = len(team_lists) - 1
+                team_name = TEAMS[inexp_index]
+                team_lists[team_name].append(player)
+                if inexp_index == 0 : inexp_index = max_team_index
                 else: inexp_index -= 1
 
     #Prints the team_lists to the console in a readable manner
