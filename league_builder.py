@@ -28,6 +28,8 @@ def player_description(player):
     return "{}, {}, {}".format(name, experience, guardians)
 
 
+#Create output file (truncating any previous versions)
+#and output each team's data to file
 def output_team_lists(team_lists):
     with open(FILENAME, 'w') as file:
         for team, team_list in team_lists.items():
@@ -35,6 +37,14 @@ def output_team_lists(team_lists):
             for player in team_list:
                 file.write(player_description(player) + "\n")
             file.write("\n")
+
+
+def create_welcome_letter_for(player, team):
+    name = player[NAME]
+    guardians = player[GUARDIANS]
+    letter_filename = name.lower().replace(' ', '_') + '.txt'
+    print(letter_filename)
+
 
 
 #Main Function
@@ -70,6 +80,7 @@ if __name__ == "__main__":
                 team_lists[team_name].append(player)
                 if inexp_index == 0 : inexp_index = max_team_index
                 else: inexp_index -= 1
+            create_welcome_letter_for(player, team_name)
 
     #Prints the team_lists to the console in a readable manner
     output_team_lists(team_lists)
