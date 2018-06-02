@@ -2,7 +2,7 @@ import csv
 
 ################# CONSTANTS #################
 
-#Constant that supplies the names of the teams
+#Constant that supplies the names of the teams and file names
 TEAMS = ['Sharks', 'Dragons', 'Raptors']
 FILENAME = 'teams.txt'
 WELCOME_LTR_MASTER = 'welcome_letter_master.txt'
@@ -13,7 +13,7 @@ EXPERIENCE = 'Soccer Experience'
 GUARDIANS = 'Guardian Name(s)'
 HEIGHT = 'Height (inches)'
 
-#Constants for welcome_letter_master
+#Constants from welcome_letter_master
 STUDENT_NAME = 'STUDENT_NAME'
 GUARDIAN_NAMES = 'GUARDIAN_NAMES'
 TEAM_NAME = 'TEAM_NAME'
@@ -91,7 +91,7 @@ if __name__ == "__main__":
     letter_text = import_welcome_letter_text()
 
     #Reads in the CSV file and divvies players into teams.
-    #Players with experienced are placed on teams in a 'positive'
+    #Players with experience are placed on teams in a 'positive'
     #direction (from Team 0 to Team x, where x is the number of teams - 1),
     #and inexperienced players are placed on teams in a 'negative'
     #direction (from Team x, where x is the number of teams - 1, to Team 0.)
