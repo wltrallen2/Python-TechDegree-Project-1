@@ -43,8 +43,6 @@ def create_welcome_letter_for(player, team):
     name = player[NAME]
     guardians = player[GUARDIANS]
     letter_filename = name.lower().replace(' ', '_') + '.txt'
-    print(letter_filename)
-
 
 
 #Main Function
