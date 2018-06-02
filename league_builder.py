@@ -7,7 +7,6 @@ NAME = 'Name'
 EXPERIENCE = 'Soccer Experience'
 GUARDIANS = 'Guardian Name(s)'
 HEIGHT = 'Height (inches)'
-TEAM = 'Team'
 
 
 #Determines if a player has soccer experienced_players
@@ -19,11 +18,11 @@ def has_experience(player):
 
 #Prints a description of the player to console:
 #Player name, experience level, and guardian names
-def print_player(player):
+def player_description(player):
     name = player[NAME]
     experience = player[EXPERIENCE]
     guardians = player[GUARDIANS]
-    print("{}, {}, {}".format(name, experience, guardians))
+    return "{}, {}, {}".format(name, experience, guardians)
 
 
 #Main Function
@@ -33,9 +32,8 @@ if __name__ == "__main__":
     for team in TEAMS:
         team_lists[team] = list()
 
-    #Creates two lists to divvy the players into two groups
-    experienced_players = list()
-    inexperienced_players = list()
+    exp_index = 0
+    inexp_index = len(team_lists) - 1
 
     #Reads in the CSV file and divvies players into two groups:
     #experienced_players and inexperienced_players
@@ -43,32 +41,16 @@ if __name__ == "__main__":
         players_reader = csv.DictReader(csvfile)
         for player in players_reader:
             if has_experience(player):
-                experienced_players.append(player)
+                team_lists[TEAMS[exp_index]].append(player)
+                if exp_index == len(team_lists) - 1 : exp_index = 0
+                else: exp_index += 1
             else:
-                inexperienced_players.append(player)
+                team_lists[TEAMS[inexp_index]].append(player)
+                if inexp_index == 0 : inexp_index = len(team_lists) - 1
+                else: inexp_index -= 1
 
-    #Calculates the number of experienced_players and
-    #inexperienced_players per team
-    num_teams = len(TEAMS)
-    num_experienced_per_team = len(experienced_players) // num_teams
-    num_inexperienced_per_team = len(inexperienced_players) // num_teams
-
-    #Distributed experienced_players and inexperienced_players
-    #into equal and balanced teams according to experience
-    team_num = 0
-    for team_name, team_members in team_lists.items():
-        #Adds slice of experienced_players to each team
-        e_start = team_num * num_experienced_per_team
-        e_end = (team_num + 1) * num_experienced_per_team
-        team_members.extend(experienced_players[e_start:e_end])
-
-        #Adds slice of inexperienced_players to each team
-        i_start = team_num * num_inexperienced_per_team
-        i_end = (team_num + 1) * num_inexperienced_per_team
-        team_members.extend(inexperienced_players[i_start:i_end])
-        team_num += 1
-
-        #TODO: Remove this console print & replace with write_out
-        print(team_name + ":")
-        for player in team_members:
-            print_player(player)
+    for team, team_list in team_lists.items():
+        print(team)
+        for player in team_list:
+            print(player_description(player))
+        print("\n\n\n")
